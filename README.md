@@ -13,11 +13,12 @@ CpG_distribution.R
 	Analyzes CpG and expression data and generates figures
 
 Data Files:
-Origin_Differential_Expression_Data.txt
+Origin_Differential_Expression_Data.txt--to be made available by June 1st 2015 or earlier
 	Table of Expression Difference (log2.difference) between colony halves grouped by site of origin
-Transplant_Differential_Expresion_Data.txt
+Transplant_Differential_Expresion_Data.txt--to be made available by June 1st 2015 or earlier
 	Table of Expression Difference (log2.difference) between colony halves grouped by transplant site
-Sample_Gene_Expression_Data.txt
+Sample_Gene_Expression_Data.txt--to be made available by June 1st 2015 or earlier
 	Table of normalized gene expression for each gene (isogroup) for each sample including global mean expression
 Sample_Information_Table.txt
 	Table of summary information on each sample
+	
