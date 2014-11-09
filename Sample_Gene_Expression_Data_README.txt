@@ -24,15 +24,3 @@ KK1, KK10, KK11 etc...
 	See Sample_Information_Table.txt for more information on individual samples.
 mean_expression:
 	This column hold the mean expression in terms of fold change across all samples.
-adjp.t:
-	This column holds the FDR adjusted p values for the effect of transplantation on 
-	gene expression. All p values were generated using DESeq.
-adjp.o:
-	This column holds the FDR adjusted p values for the effect or site of origin on 
-	gene expression.
-pval.t:
-	This column holds the unadjusted p values for the effect of transplant on gene
-	expression.
-pval.o:
-	This column holds the unadjusted p values for the effect of site of origin on
-	gene expression.

@@ -1,6 +1,5 @@
 ##--------------- DOUBLECHECKING AGAINST DIFFERENT DATASETS -----------------------------
 #as a double check Misha wanted me to use this dataset in place of the expression datasets 
-#used to build figure 4
 setwd('/Users/grovesdixon/Documents/lab_files/CpGoe_Project/Data-Analysis_files/cpg_OE')
 load("LBay_RT_Allgenes_Ori_Trans.RData")
 head(allOrigin)
@@ -17,32 +16,24 @@ head(originOrph)
 head(transplantOrph)
 ####====================================================================================
 #IMPORT DATA
-# cgm = read.table('/Users/grovesdixon/Documents/lab_files/CpGoe_Project/circadian_rhythm/milleporaCpGData.txt',header=T)###new one after redoing the blasting and such DOES THE GENE BODIES
-# cgm = read.table('/Users/grovesdixon/Documents/lab_files/CpGoe_Project/trascriptome_only/data_analysis/amil_CDS_CpG.txt', header = T)
 cgm = read.table('/Users/grovesdixon/Documents/lab_files/CpGoe_Project/trascriptome_only/data_analysis/amil_CDS_CpG_sub1000.txt', header = T)
 head(cgm)
-#================================================================================
-length(cgm$EST)
-x = unique(cgm$EST)
-length(x)
 ##-------------- USE ANNOTATIONS TO FILTER -------------------------
 cgma = read.table("/Users/grovesdixon/Documents/lab_files/CpGoe_Project/trascriptome_only/data_analysis/MergedIso2spAss5-14-14_apr2014_BioP.txt")
-length(cgma[,1])
 cgma = na.omit(cgma)
 colnames(cgma)=c("EST","GOs")#; colnames(cgda) = c("EST")
 cgm = merge(cgm, cgma, by = "EST")
-#cgd = merge(cgd, cgda, by = "EST")
 cgma = ''; cgda = ''
 cgm = cgm[,1:length(cgm)-1] ##remove the GOs so visualization is easier
 #===============================================================================
 ##------------- FILTER BASED ON SIZE AND CPGO/E --------------------------------
 par(mar = c(5, 4, 4, 2) + 0.1)
 minlength = 300
-maxlength = 20000 ###original value for gene bodies was 20000
-minOE = .001  ##.001
+maxlength = 20000
+minOE = .001
 maxOE = 2
 filter = function(cg, minlength, maxlength, maxOE, minOE){
-  cg$cpgOE = (cg$CpG/(cg$C*cg$G))*(cg$length^2/(cg$length-1))##equation in Gavery and Roberts (oysters)
+  cg$cpgOE = (cg$CpG/(cg$C*cg$G))*(cg$length^2/(cg$length-1))
   cg$gpcOE = (cg$GpC/(cg$C*cg$G))*(cg$length^2/(cg$length-1))
   cg$tpgOE = (cg$TpG/(cg$T*cg$G))*(cg$length^2/(cg$length-1))
   too.high = length(cg[cg$cpgOE > maxOE,]$EST)
@@ -78,7 +69,6 @@ emmix = function(cg,species,means,sigma,lambda,k){
 par(mfrow=c(1,1))
 ##NULLs
 mil2mix = emmix(cgm,"millepora",NULL,NULL,NULL,2)
-#dig2mix = emmix(cgd,"digitifera",NULL,NULL,NULL,2)
 model_df = function(lambda,mean,sigma){
   df = data.frame(cbind(lambda,mean,sigma))
   rownames(df) = paste("comp",rownames(df),sep="")
@@ -124,7 +114,7 @@ plot_mix = function(dat, mixmod, species, figure, reduction.factor, At, MGP, max
     BREAKS = (length(hist.stats$breaks))
     make_comp = function(comp_num){
       comp = function(x){
-        mixmod$lambda[comp_num]*dnorm(x, mixmod$mean[comp_num], mixmod$sigma[comp_num])/1.32##I have no idea why this is the thing to put there but it matches the density plot
+        mixmod$lambda[comp_num]*dnorm(x, mixmod$mean[comp_num], mixmod$sigma[comp_num])/1.32
       }
       return(comp)
     }##builds a component as a function of x based on the component's parameters which are found in mixmod
